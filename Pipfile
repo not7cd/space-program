@@ -6,6 +6,10 @@ name = "pypi"
 [packages]
 krpc = "*"
 glom = "*"
+dash = "*"
+dash-core-components = "*"
+dash-html-components = "*"
+dash-renderer = "*"
 
 [dev-packages]
 
