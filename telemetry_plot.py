@@ -10,13 +10,15 @@ from os.path import isfile, join
 
 TELEMETRY_PATH = "telemetry/"
 
+server = Flask(__name__)
+app = dash.Dash()
+
 telemetry_files = [
     {"label": f, "value": join(TELEMETRY_PATH, f)}
     for f in listdir(TELEMETRY_PATH)
     if isfile(join(TELEMETRY_PATH, f))
 ]
 
-app = dash.Dash()
 
 app.layout = html.Div(
     [
@@ -56,4 +58,4 @@ def update_graph_g_force(selected_dropdown_value):
 
 
 if __name__ == "__main__":
-    app.run_server()
+    app.run_server(debug=True)
