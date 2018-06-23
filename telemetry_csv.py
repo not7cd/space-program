@@ -6,7 +6,7 @@ import krpc
 from glom import glom
 
 CSV_SPEC = {
-    "ut": "space_center.ut",
+    "met": "vessel.met",
     "surf_speed": "flight.speed",
     "mean_altitude": "flight.mean_altitude",
     "g_force": "flight.g_force",
@@ -18,6 +18,23 @@ CSV_SPEC = {
 
 INTERVAL = 1
 
+
+class Telemetry:
+    """Provides interface for basic telemetry"""
+
+    def __init__(self, vessel):
+        self.vessel = vessel
+        self.flight = vessel.flight(self._reference_frame)
+
+    @property
+    def orbit(self):
+        return self.vessel.orbit
+
+    @property
+    def _reference_frame(self):
+        return self.vessel.orbit.body.reference_frame
+
+
 if __name__ == "__main__":
     try:
         print("Connecting to KSP. Please accept the connection from kRPC window in KSP")
@@ -26,13 +43,13 @@ if __name__ == "__main__":
         print("Failed to connect to kRPC server. Is KSP and the kRPC Server running?")
         raise e
 
+    telemetry = Telemetry(conn.space_center.active_vessel)
+
     data_endpoints = {
         "space_center": conn.space_center,
-        "vessel": conn.space_center.active_vessel,
-        "flight": conn.space_center.active_vessel.flight(
-            conn.space_center.active_vessel.orbit.body.reference_frame
-        ),
-        "orbit": conn.space_center.active_vessel.orbit,
+        "vessel": telemetry.vessel,
+        "flight": telemetry.flight,
+        "orbit": telemetry.orbit,
     }
 
     filename = "telemetry/{}_{}.csv".format(
