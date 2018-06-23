@@ -1,3 +1,4 @@
+from flask import Flask
 import dash
 from dash.dependencies import Input, Output
 import dash_core_components as dcc
@@ -43,6 +44,7 @@ def update_graph(selected_dropdown_value):
             alt["y"].append(row["mean_altitude"])
 
     return {"data": [alt]}
+
 
 @app.callback(Output("g-force", "figure"), [Input("my-dropdown", "value")])
 def update_graph_g_force(selected_dropdown_value):

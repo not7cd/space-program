@@ -11,6 +11,7 @@ dash-core-components = "*"
 dash-html-components = "*"
 dash-renderer = "*"
 flask = "*"
+gunicorn = "*"
 
 [dev-packages]
 csvs-to-sqlite = "*"

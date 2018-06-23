@@ -1,1 +1,1 @@
-web: gunicorn -w 1 -b :8000 telemetry_plot:server
+web: gunicorn telemetry_plot:server
